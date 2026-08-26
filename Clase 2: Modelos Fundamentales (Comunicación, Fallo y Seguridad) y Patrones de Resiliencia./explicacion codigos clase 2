@@ -1,0 +1,35 @@
+Aquí tienes la transcripción exacta y completa del texto de la imagen para que puedas copiarlo y pegarlo directamente en tu README de GitHub o en el material de Google Classroom:
+📄 2. Clase 2: Tolerancia a Fallos y Resiliencia (ClienteResiliente.java y ServidorInestable.java)
+
+Esta dupla simula fallos reales de red y latencia para demostrar patrones de resiliencia en sistemas distribuidos (Manejo de Timeouts, Reintentos/Retry Pattern y Backoff Exponencial).
+📄 ServidorInestable.java
+
+    ¿Qué hace?:
+
+        Inicia un socket de servidor en el puerto 5001.
+
+        Implementa un bucle infinito while(true) para atender peticiones en serie.
+
+        Usa la clase Random para simular 3 comportamientos impredecibles (caos de red) ante cada intento de conexión:
+
+            Caso 1 (Probabilidad < 40% - Congelamiento/Latencia): El servidor fuerza una pausa de 10 segundos (Thread.sleep(10000)) imitando un bloqueo o congelamiento de red.
+
+            Caso 2 (Probabilidad 40% a 70% - Caída Abrupta): El servidor cierra la conexión inmediatamente (clientSocket.close()) sin enviar respuesta, imitando una caída de servidor o pérdida de paquetes.
+
+            Caso 3 (Probabilidad resto - Respuesta Exitosa): El servidor responde correctamente enviando datos por el flujo de salida (DataOutputStream).
+
+📄 ClienteResiliente.java
+
+    ¿Qué hace?:
+
+        Intenta conectarse al servidor en bucle hasta un máximo de 4 intentos (MAX_REINTENTOS = 4).
+
+        Define un tiempo límite estricto de espera de 2 segundos (socket.connect(..., TIMEOUT_MS)).
+
+        Maneja Excepciones:
+
+            Si el servidor se congela (Caso 1 del servidor), el cliente interrumpe la espera lanzando un SocketTimeoutException al pasar los 2 segundos sin respuesta.
+
+            Si el servidor cierra la conexión (Caso 2 del servidor), captura un IOException.
+
+        Aplica Backoff Exponencial: Si un intento falla, el cliente no reintenta de inmediato; espera un tiempo determinado (ejemplo: 1000ms en el primer intento y va escalando) mediante Thread.sleep() antes de reintentar la conexión.
