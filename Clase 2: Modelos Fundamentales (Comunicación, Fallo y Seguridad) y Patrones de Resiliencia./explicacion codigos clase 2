@@ -1,4 +1,4 @@
-Aquí tienes la transcripción exacta y completa del texto de la imagen para que puedas copiarlo y pegarlo directamente en tu README de GitHub o en el material de Google Classroom:
+
 📄 2. Clase 2: Tolerancia a Fallos y Resiliencia (ClienteResiliente.java y ServidorInestable.java)
 
 Esta dupla simula fallos reales de red y latencia para demostrar patrones de resiliencia en sistemas distribuidos (Manejo de Timeouts, Reintentos/Retry Pattern y Backoff Exponencial).
